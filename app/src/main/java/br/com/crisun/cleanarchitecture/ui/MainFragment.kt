@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import br.com.crisun.cleanarchitecture.R
 import kotlinx.android.synthetic.main.main_fragment.*
+import org.jetbrains.anko.error
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
@@ -22,12 +23,16 @@ class MainFragment : Fragment() {
 
         viewModel.process()
 
+        viewModel.errorLiveData.observe(this, Observer { msg ->
+            error_view.text = msg
+        })
+
         viewModel.messageLiveData.observe(this, Observer { msg ->
-            message_view.text = msg.toString()
+            message_view.text = msg?.toString()
         })
 
         viewModel.messagesByHourLiveData.observe(this, Observer { msgs ->
-            history_view.text = msgs.toString()
+            history_view.text = msgs?.toString()
         })
     }
 }

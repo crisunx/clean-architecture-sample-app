@@ -8,8 +8,6 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from os import curdir, sep
 
 class HTTPServerRequestHandler(BaseHTTPRequestHandler):
-    resp_code = "200" if sys.argv else sys.argv[1]
-
     def send_content(self):
         try:
             print("Url: " + self.path + " Header app-version: " + self.headers["app-version"])
@@ -20,10 +18,11 @@ class HTTPServerRequestHandler(BaseHTTPRequestHandler):
         print("------------------")
 
         id = random.randint(1, 90000)
+        code = random.choice([200, 400])
         text = random.choice(['Ola 123', 'Oi 453', 'Teste 666'])
         message = '{"id": ' + str(id) + ', "text": "' + text + '"}'
 
-        self.send_response(int(HTTPServerRequestHandler.resp_code))
+        self.send_response(code)
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
         self.wfile.write(bytes(message, "utf8"))
@@ -38,10 +37,8 @@ class HTTPServerRequestHandler(BaseHTTPRequestHandler):
         HTTPServerRequestHandler.send_content(self)
 
 def run():
-    resp_code = "200" if sys.argv else sys.argv[1]
-
     server_address = ('0.0.0.0', 9991)
-    print('Starting http server at 9991 default response code ' + resp_code)
+    print('Starting http server at 9991 default response code ')
     httpd = HTTPServer(server_address, HTTPServerRequestHandler)
 
     print('running server...')

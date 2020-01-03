@@ -2,8 +2,8 @@ package br.com.crisun.architecture.data.di
 
 import androidx.room.Room
 import br.com.crisun.architecture.data.BuildConfig
-import br.com.crisun.architecture.data.api.MessageApi
-import br.com.crisun.architecture.data.database.HistoryDatabase
+import br.com.crisun.architecture.data.network.MessageApi
+import br.com.crisun.architecture.data.database.MessageDatabase
 import br.com.crisun.architecture.data.repository.MessageRepository
 import br.com.crisun.architecture.data.repository.MessageRepositoryImpl
 import okhttp3.OkHttpClient
@@ -23,16 +23,16 @@ val repositoryModule = module {
 }
 
 val databaseModule = module {
-    single { get<HistoryDatabase>().historyDao() }
-    single { Room.databaseBuilder(get(), HistoryDatabase::class.java, "history.db").build() }
+    single { get<MessageDatabase>().messageDao() }
+    single { Room.databaseBuilder(get(), MessageDatabase::class.java, "message.db").build() }
 }
 
-fun provideOkHttpClient() = OkHttpClient.Builder().apply {
+fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder().apply {
     connectTimeout(60L, TimeUnit.SECONDS)
     readTimeout(60L, TimeUnit.SECONDS)
 }.build()
 
-fun provideRetrofit(client: OkHttpClient) = Retrofit.Builder().apply {
+fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder().apply {
     baseUrl(BuildConfig.SERVER_BASE_URL)
     client(client)
     addConverterFactory(MoshiConverterFactory.create())

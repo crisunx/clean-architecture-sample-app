@@ -1,10 +1,10 @@
-package br.com.crisun.architecture.data.converter
+package br.com.crisun.architecture.data.database
 
 import androidx.room.TypeConverter
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DateConverter {
+class Converters {
     private val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale("pt", "BR"))
 
     @TypeConverter
