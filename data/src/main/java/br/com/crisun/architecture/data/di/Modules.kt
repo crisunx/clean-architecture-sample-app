@@ -2,8 +2,8 @@ package br.com.crisun.architecture.data.di
 
 import androidx.room.Room
 import br.com.crisun.architecture.data.BuildConfig
-import br.com.crisun.architecture.data.network.MessageApi
 import br.com.crisun.architecture.data.database.MessageDatabase
+import br.com.crisun.architecture.data.network.MessageApi
 import br.com.crisun.architecture.data.repository.MessageRepository
 import br.com.crisun.architecture.data.repository.MessageRepositoryImpl
 import okhttp3.OkHttpClient

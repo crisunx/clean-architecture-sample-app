@@ -1,7 +1,7 @@
 package br.com.crisun.architecture.data.network
 
-import br.com.crisun.architecture.domain.model.Failure
 import br.com.crisun.architecture.domain.model.Error
+import br.com.crisun.architecture.domain.model.Failure
 import br.com.crisun.architecture.domain.model.Result
 import br.com.crisun.architecture.domain.model.Success
 import retrofit2.Response
@@ -24,17 +24,13 @@ inline fun <T : Any> Response<T>.onFailure(action: (Error) -> Unit) {
 }
 
 fun <T : DomainMapper<R>, R : Any> Response<T>.getData(): Result<R> {
-    try {
-        onSuccess {
-            return Success(it.mapToDomainModel())
-        }
-
-        onFailure {
-            return Failure(it)
-        }
-
-        return Failure(Error(1, ""))
-    } catch (e: Exception) {
-        return Failure(Error(1, ""))
+    onSuccess {
+        return Success(it.mapToDomainModel())
     }
+
+    onFailure {
+        return Failure(it)
+    }
+
+    return Failure(Error(1, ""))
 }
