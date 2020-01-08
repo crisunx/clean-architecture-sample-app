@@ -17,7 +17,7 @@ inline fun <T : Any> Response<T>.onSuccess(action: (T) -> Unit): Response<T> {
 
 inline fun <T : Any> Response<T>.onFailure(action: (Error) -> Unit) {
     if (!isSuccessful) {
-        errorBody()?.run { action(Error(code(), string())) }
+        errorBody()?.use { action(Error(code(), it.string())) }
     }
 }
 

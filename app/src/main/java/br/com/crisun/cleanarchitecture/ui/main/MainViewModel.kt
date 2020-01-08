@@ -13,30 +13,25 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.anko.AnkoLogger
 
-class MainViewModel(private val repository: MessageService) : ViewModel(), AnkoLogger {
+class MainViewModel(private val service: MessageService) : ViewModel(), AnkoLogger {
     val errorLiveData = MutableLiveData<String>()
     val messageLiveData = MutableLiveData<Message>()
     val messagesByHourLiveData = MutableLiveData<List<MessagesByHour>>()
 
     fun process() {
         viewModelScope.launch {
-            withContext(Dispatchers.Main) {
-                repository.getMessage().onSuccess {
-                    errorLiveData.value = ""
-                    messageLiveData.value = it
 
-                    withContext(Dispatchers.IO) {
-                        repository.insert(it)
-                    }
-                }.onFailure {
-                    messageLiveData.value = null
-                    errorLiveData.value = it.toString()
-                }
+            service.getMessage().onSuccess {
+                errorLiveData.value = ""
+                messageLiveData.value = it
+
+                service.insert(it)
+            }.onFailure {
+                messageLiveData.value = null
+                errorLiveData.value = it.toString()
             }
 
-            messagesByHourLiveData.value = withContext(Dispatchers.IO) {
-                repository.getMessagesByHour()
-            }
+            messagesByHourLiveData.value =  service.getMessagesByHour()
         }
     }
 }
