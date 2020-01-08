@@ -1,7 +1,7 @@
-package br.com.crisun.architecture.data.repository
+package br.com.crisun.architecture.domain.repository
 
-import br.com.crisun.architecture.domain.Message
-import br.com.crisun.architecture.domain.MessagesByHour
+import br.com.crisun.architecture.domain.model.Message
+import br.com.crisun.architecture.domain.model.MessagesByHour
 import br.com.crisun.architecture.domain.model.Result
 
 interface MessageRepository {

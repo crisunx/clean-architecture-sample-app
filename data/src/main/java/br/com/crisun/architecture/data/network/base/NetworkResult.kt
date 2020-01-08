@@ -1,4 +1,4 @@
-package br.com.crisun.architecture.data.network
+package br.com.crisun.architecture.data.network.base
 
 import br.com.crisun.architecture.domain.model.Error
 import br.com.crisun.architecture.domain.model.Failure
@@ -6,9 +6,7 @@ import br.com.crisun.architecture.domain.model.Result
 import br.com.crisun.architecture.domain.model.Success
 import retrofit2.Response
 
-interface DomainMapper<T : Any> {
-    fun mapToDomainModel(): T
-}
+val generalFailure = Failure(Error(666, "Something went wrong, please try again."))
 
 inline fun <T : Any> Response<T>.onSuccess(action: (T) -> Unit): Response<T> {
     if (isSuccessful)  {
@@ -25,12 +23,12 @@ inline fun <T : Any> Response<T>.onFailure(action: (Error) -> Unit) {
 
 fun <T : DomainMapper<R>, R : Any> Response<T>.getData(): Result<R> {
     onSuccess {
-        return Success(it.mapToDomainModel())
+        return Success(it.mapToDomain())
     }
 
     onFailure {
         return Failure(it)
     }
 
-    return Failure(Error(1, ""))
+    return generalFailure
 }

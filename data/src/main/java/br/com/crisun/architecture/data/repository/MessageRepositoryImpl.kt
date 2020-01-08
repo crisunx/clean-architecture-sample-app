@@ -3,9 +3,10 @@ package br.com.crisun.architecture.data.repository
 import br.com.crisun.architecture.data.database.dao.MessageDao
 import br.com.crisun.architecture.data.database.model.MessageEntity
 import br.com.crisun.architecture.data.network.MessageApi
-import br.com.crisun.architecture.data.network.getData
-import br.com.crisun.architecture.domain.Message
+import br.com.crisun.architecture.data.network.base.getData
+import br.com.crisun.architecture.domain.model.Message
 import br.com.crisun.architecture.domain.model.Result
+import br.com.crisun.architecture.domain.repository.MessageRepository
 import java.util.*
 
 class MessageRepositoryImpl(private val api: MessageApi, private val dao: MessageDao) : Repository<Message, MessageEntity>(), MessageRepository {

@@ -1,8 +1,9 @@
 package br.com.crisun.architecture.data.network.model
 
-import br.com.crisun.architecture.data.network.DomainMapper
-import br.com.crisun.architecture.domain.Message
+import br.com.crisun.architecture.data.network.base.DomainMapper
+import br.com.crisun.architecture.domain.model.Message
 
-data class MessageResponse(val id: Long, val text: String? = "") : DomainMapper<Message> {
-    override fun mapToDomainModel() = Message(id, text ?: "")
+data class MessageResponse(val id: Long, val phone: String, val text: String) : DomainMapper<Message> {
+    override fun mapToDomain() =
+        Message(id, text)
 }

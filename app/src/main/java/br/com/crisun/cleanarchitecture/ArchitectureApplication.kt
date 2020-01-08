@@ -4,18 +4,19 @@ import android.app.Application
 import br.com.crisun.architecture.data.di.databaseModule
 import br.com.crisun.architecture.data.di.networkModule
 import br.com.crisun.architecture.data.di.repositoryModule
+import br.com.crisun.architecture.domain.di.domainModule
 import br.com.crisun.cleanarchitecture.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class ArchApplication : Application() {
+class ArchitectureApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
-            androidContext(this@ArchApplication)
+            androidContext(this@ArchitectureApplication)
             modules(
-                listOf(appModule, networkModule, databaseModule, repositoryModule)
+                listOf(appModule, networkModule, databaseModule, repositoryModule, domainModule)
             )
         }
     }

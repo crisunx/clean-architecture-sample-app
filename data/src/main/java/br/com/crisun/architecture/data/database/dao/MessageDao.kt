@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import br.com.crisun.architecture.data.database.model.MessageEntity
-import br.com.crisun.architecture.domain.MessagesByHour
+import br.com.crisun.architecture.domain.model.MessagesByHour
 
 @Dao
 interface MessageDao {
