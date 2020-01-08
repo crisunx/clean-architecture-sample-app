@@ -8,9 +8,7 @@ import br.com.crisun.architecture.domain.model.Message
 import br.com.crisun.architecture.domain.model.MessagesByHour
 import br.com.crisun.architecture.domain.model.onFailure
 import br.com.crisun.architecture.domain.model.onSuccess
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.jetbrains.anko.AnkoLogger
 
 class MainViewModel(private val service: MessageService) : ViewModel(), AnkoLogger {
@@ -31,7 +29,7 @@ class MainViewModel(private val service: MessageService) : ViewModel(), AnkoLogg
                 errorLiveData.value = it.toString()
             }
 
-            messagesByHourLiveData.value =  service.getMessagesByHour()
+            messagesByHourLiveData.value = service.getMessagesByHour()
         }
     }
 }
