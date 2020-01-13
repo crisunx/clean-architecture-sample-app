@@ -1,4 +1,4 @@
-package br.com.crisun.cleanarchitecture.ui
+package br.com.crisun.cleanarchitecture.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,12 +22,16 @@ class MainFragment : Fragment() {
 
         viewModel.process()
 
+        viewModel.errorLiveData.observe(this, Observer { msg ->
+            error_view.text = msg
+        })
+
         viewModel.messageLiveData.observe(this, Observer { msg ->
-            message_view.text = msg.toString()
+            message_view.text = msg?.toString()
         })
 
         viewModel.messagesByHourLiveData.observe(this, Observer { msgs ->
-            history_view.text = msgs.toString()
+            history_view.text = msgs?.toString()
         })
     }
 }

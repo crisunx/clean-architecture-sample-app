@@ -2,7 +2,7 @@ package br.com.crisun.cleanarchitecture
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import br.com.crisun.cleanarchitecture.ui.MainFragment
+import br.com.crisun.cleanarchitecture.ui.main.MainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
