@@ -19,4 +19,5 @@ inline fun <T : Any> Result<T>.onFailure(action: (Error) -> Unit) {
     if (this is Failure) {
         action(error)
     }
+
 }

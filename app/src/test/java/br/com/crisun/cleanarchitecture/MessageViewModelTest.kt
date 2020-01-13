@@ -37,8 +37,9 @@ class MessageViewModelTest {
     fun setup() {
         Dispatchers.setMain(dispatcher)
 
-        messageService = mockkClass(MessageService::class)
+        messageService = mockkClass(MessageService::class, relaxed = true)
         statisticService = mockkClass(StatisticService::class, relaxed = true)
+
         viewModel = MainViewModel(messageService, statisticService)
     }
 
@@ -72,6 +73,20 @@ class MessageViewModelTest {
 
             assertEquals(null, viewModel.messageLiveData.value)
             assertEquals(expected.error, viewModel.errorLiveData.value)
+        }
+    }
+
+    @Test
+    fun `Test getStatistics sets liveData`() {
+        dispatcher.runBlockingTest {
+            val expected = listOf(StatisticByHour("12", 10), StatisticByHour("13", 15))
+
+            coEvery { statisticService.getStatistics() } returns expected.toList()
+            coEvery { messageService.getMessage() } returns Success(Message(1, "test"))
+
+            viewModel.process()
+
+            assertEquals(expected, viewModel.statisticLiveData.value)
         }
     }
 }
