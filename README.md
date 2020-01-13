@@ -27,7 +27,7 @@ Este módulo contém todo o código relacionado à camada UI / Apresentação. I
 A camada de apresentação é criada usando os componentes da arquitetura do Android: ViewModels, Lifecycle e LiveData.
 
 #### Módulo Domain
-O módulo Domain é a parte principal de todo aplicativo e contém a lógica de negócios. Este módulo deve ser independente de qualquer estrutura. Pela regra de inversão de dependência, este módulo não deve depender do módulo ** app ** ou ** data **.
+O módulo Domain é a parte principal de todo aplicativo e contém a lógica de negócios. Este módulo deve ser independente de qualquer estrutura. Pela regra de inversão de dependência, este módulo não deve depender do módulo **app** ou **data**.
 
 #### Módulo Data
 O módulo Data contém as implementações dos repositórios e outras fontes de dados, como bancos de dados ou rede.
