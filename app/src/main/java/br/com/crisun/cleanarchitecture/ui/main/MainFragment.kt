@@ -23,14 +23,14 @@ class MainFragment : Fragment() {
         viewModel.process()
 
         viewModel.errorLiveData.observe(this, Observer { msg ->
-            error_view.text = msg
+            error_view.text = msg?.toString()
         })
 
         viewModel.messageLiveData.observe(this, Observer { msg ->
             message_view.text = msg?.toString()
         })
 
-        viewModel.messagesByHourLiveData.observe(this, Observer { msgs ->
+        viewModel.statisticLiveData.observe(this, Observer { msgs ->
             history_view.text = msgs?.toString()
         })
     }

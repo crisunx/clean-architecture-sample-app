@@ -2,10 +2,12 @@ package br.com.crisun.architecture.data.di
 
 import androidx.room.Room
 import br.com.crisun.architecture.data.BuildConfig
-import br.com.crisun.architecture.data.database.MessageDatabase
-import br.com.crisun.architecture.data.network.MessageApi
+import br.com.crisun.architecture.data.local.StatisticDatabase
+import br.com.crisun.architecture.data.remote.MessageApi
 import br.com.crisun.architecture.data.repository.MessageRepositoryImpl
+import br.com.crisun.architecture.data.repository.StatisticRepositoryImpl
 import br.com.crisun.architecture.domain.repository.MessageRepository
+import br.com.crisun.architecture.domain.repository.StatisticRepository
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -19,12 +21,13 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
-    factory<MessageRepository> { MessageRepositoryImpl(get(), get()) }
+    factory<MessageRepository> { MessageRepositoryImpl(get()) }
+    factory<StatisticRepository> { StatisticRepositoryImpl(get()) }
 }
 
 val databaseModule = module {
-    single { get<MessageDatabase>().messageDao() }
-    single { Room.databaseBuilder(get(), MessageDatabase::class.java, "message.db").build() }
+    single { get<StatisticDatabase>().statisticDao() }
+    single { Room.databaseBuilder(get(), StatisticDatabase::class.java, "statistic.db").build() }
 }
 
 fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder().apply {

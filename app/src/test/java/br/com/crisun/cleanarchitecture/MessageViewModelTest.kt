@@ -1,12 +1,17 @@
 package br.com.crisun.cleanarchitecture
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import br.com.crisun.architecture.domain.model.Error
+import br.com.crisun.architecture.domain.model.Failure
+import br.com.crisun.architecture.domain.model.Message
+import br.com.crisun.architecture.domain.model.StatisticByHour
+import br.com.crisun.architecture.domain.model.Success
 import br.com.crisun.architecture.domain.service.MessageService
+import br.com.crisun.architecture.domain.service.StatisticService
 import br.com.crisun.cleanarchitecture.ui.main.MainViewModel
-import io.mockk.coEvery
-import io.mockk.mockk
-import io.mockk.mockkClass
+import io.mockk.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
@@ -17,11 +22,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalCoroutinesApi
 class MessageViewModelTest {
     val dispatcher = TestCoroutineDispatcher()
 
-    lateinit var service: MessageService
     lateinit var viewModel: MainViewModel
+    lateinit var messageService: MessageService
+    lateinit var statisticService: StatisticService
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -30,8 +37,9 @@ class MessageViewModelTest {
     fun setup() {
         Dispatchers.setMain(dispatcher)
 
-        service = mockkClass(MessageService::class)
-        viewModel = MainViewModel(service)
+        messageService = mockkClass(MessageService::class)
+        statisticService = mockkClass(StatisticService::class, relaxed = true)
+        viewModel = MainViewModel(messageService, statisticService)
     }
 
     @After
@@ -40,14 +48,30 @@ class MessageViewModelTest {
     }
 
     @Test
-    fun addition_isCorrect() {
+    fun `Test getMessage sets liveData value when success`() {
         dispatcher.runBlockingTest {
-            coEvery { service.getMessage() } returns mockk()
-            coEvery { service.getMessagesByHour() } returns mockk()
+            val expected = Success(Message(1, "test"))
+
+            coEvery { messageService.getMessage() } returns Success(Message(1, "test"))
+
+            viewModel.process()
+
+            assertEquals(null, viewModel.errorLiveData.value)
+            assertEquals(expected.data, viewModel.messageLiveData.value)
+        }
+    }
+
+    @Test
+    fun `Test getMessage sets liveData value when failure`() {
+        dispatcher.runBlockingTest {
+            val expected = Failure(Error(1, "Generic error"))
+
+            coEvery { messageService.getMessage() } returns Failure(Error(1, "Generic error"))
 
             viewModel.process()
 
             assertEquals(null, viewModel.messageLiveData.value)
+            assertEquals(expected.error, viewModel.errorLiveData.value)
         }
     }
 }

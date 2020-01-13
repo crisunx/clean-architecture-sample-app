@@ -1,8 +1,7 @@
 package br.com.crisun.architecture.data
 
-import br.com.crisun.architecture.data.database.dao.MessageDao
-import br.com.crisun.architecture.data.network.MessageApi
-import br.com.crisun.architecture.data.network.model.MessageResponse
+import br.com.crisun.architecture.data.remote.MessageApi
+import br.com.crisun.architecture.data.remote.model.MessageResponse
 import br.com.crisun.architecture.data.repository.MessageRepositoryImpl
 import br.com.crisun.architecture.domain.model.Error
 import br.com.crisun.architecture.domain.model.Failure
@@ -20,8 +19,7 @@ import retrofit2.Response
 
 class MessageRepositoryTest {
     private val api: MessageApi = mockk()
-    private val dao: MessageDao = mockk()
-    private val repository = MessageRepositoryImpl(api, dao)
+    private val repository = MessageRepositoryImpl(api)
 
     private val messageResponse = MessageResponse(1, "text")
     private val failureResponseBody = ResponseBody.create(MediaType.parse("text"), "network error")

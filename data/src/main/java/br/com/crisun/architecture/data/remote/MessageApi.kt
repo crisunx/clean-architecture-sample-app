@@ -1,6 +1,6 @@
-package br.com.crisun.architecture.data.network
+package br.com.crisun.architecture.data.remote
 
-import br.com.crisun.architecture.data.network.model.MessageResponse
+import br.com.crisun.architecture.data.remote.model.MessageResponse
 import retrofit2.Response
 import retrofit2.http.GET
 

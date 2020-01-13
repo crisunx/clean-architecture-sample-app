@@ -1,4 +1,4 @@
-package br.com.crisun.architecture.data.database
+package br.com.crisun.architecture.data.local
 
 import androidx.room.TypeConverter
 import java.text.SimpleDateFormat

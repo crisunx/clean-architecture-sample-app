@@ -1,4 +1,4 @@
-package br.com.crisun.architecture.data.network.base
+package br.com.crisun.architecture.data.remote.base
 
 import br.com.crisun.architecture.domain.model.Error
 import br.com.crisun.architecture.domain.model.Failure

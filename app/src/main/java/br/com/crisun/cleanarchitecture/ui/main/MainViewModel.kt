@@ -3,33 +3,31 @@ package br.com.crisun.cleanarchitecture.ui.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.crisun.architecture.domain.model.*
 import br.com.crisun.architecture.domain.service.MessageService
-import br.com.crisun.architecture.domain.model.Message
-import br.com.crisun.architecture.domain.model.MessagesByHour
-import br.com.crisun.architecture.domain.model.onFailure
-import br.com.crisun.architecture.domain.model.onSuccess
+import br.com.crisun.architecture.domain.service.StatisticService
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.AnkoLogger
+import java.util.*
 
-class MainViewModel(private val service: MessageService) : ViewModel(), AnkoLogger {
-    val errorLiveData = MutableLiveData<String>()
+class MainViewModel(private val messageService: MessageService, private val statisticService: StatisticService) : ViewModel() {
+    val errorLiveData = MutableLiveData<Error>()
     val messageLiveData = MutableLiveData<Message>()
-    val messagesByHourLiveData = MutableLiveData<List<MessagesByHour>>()
+    val statisticLiveData = MutableLiveData<List<StatisticByHour>>()
 
     fun process() {
         viewModelScope.launch {
 
-            service.getMessage().onSuccess {
-                errorLiveData.value = ""
+            messageService.getMessage().onSuccess {
+                errorLiveData.value = null
                 messageLiveData.value = it
 
-                service.insert(it)
+                statisticService.insert(Statistic(null, Date()))
             }.onFailure {
                 messageLiveData.value = null
-                errorLiveData.value = it.toString()
+                errorLiveData.value = it
             }
 
-            messagesByHourLiveData.value = service.getMessagesByHour()
+            statisticLiveData.value = statisticService.getStatistics()
         }
     }
 }
