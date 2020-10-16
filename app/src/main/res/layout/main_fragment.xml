@@ -7,37 +7,91 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
 
-    <TextView
-        android:id="@+id/message_view"
-        style="@android:style/TextAppearance.Medium"
+    <LinearLayout
+        android:id="@+id/remote_message_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/error_view"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/error_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="message_view" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/error_view"
-        style="@android:style/TextAppearance.Medium"
+        <TextView
+            android:id="@+id/label_view"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/lbl_remote_call" />
+
+        <TextView
+            android:id="@+id/message_view"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="message_view" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/error_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/history_view"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/history_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message_view"
-        tools:text="error_view" />
+        app:layout_constraintTop_toBottomOf="@+id/remote_message_layout">
 
-    <TextView
-        android:id="@+id/history_view"
-        style="@android:style/TextAppearance.Medium"
+        <TextView
+            android:id="@+id/error_label_view"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/lbl_error" />
+
+        <TextView
+            android:id="@+id/error_view"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="error_view" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/history_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/error_view"
-        tools:text="history_view" />
+        app:layout_constraintTop_toBottomOf="@+id/error_layout">
+
+        <TextView
+            android:id="@+id/history_label_view"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/lbl_history" />
+
+        <TextView
+            android:id="@+id/history_view"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/error_layout"
+            tools:text="history_view" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import br.com.crisun.cleanarchitecture.R
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,18 +20,22 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.process()
+        initializeObservers()
+    }
 
-        viewModel.errorLiveData.observe(this, Observer { msg ->
-            error_view.text = msg
-        })
+    private fun initializeObservers() {
+        viewModel.getError().observe(viewLifecycleOwner) {
+            error_view.text = "${error_view.text}\n$it"
+        }
 
-        viewModel.messageLiveData.observe(this, Observer { msg ->
-            message_view.text = msg?.toString()
-        })
+        viewModel.getMessage().observe(viewLifecycleOwner) {
+            message_view.text = "${message_view.text}\n$it"
 
-        viewModel.messagesByHourLiveData.observe(this, Observer { msgs ->
-            history_view.text = msgs?.toString()
-        })
+            viewModel.saveMessage(it)
+        }
+
+        viewModel.getMessagesByHour().observe(viewLifecycleOwner) {
+            history_view.text = it.toString()
+        }
     }
 }

@@ -9,9 +9,12 @@ import java.util.*
 
 @Entity(tableName = "message")
 data class MessageEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long?,
-    @ColumnInfo(name = "date") val date: Date?,
-    @ColumnInfo(name = "text") val text: String?
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+    @ColumnInfo(name = "date")
+    val date: Date,
+    @ColumnInfo(name = "text")
+    val text: String
 ) : DomainMapper<Message> {
-    override fun mapToDomain() = Message(id ?: 0, text ?: "")
+    override fun mapToDomain() = Message(id = id, text = text, date = date)
 }

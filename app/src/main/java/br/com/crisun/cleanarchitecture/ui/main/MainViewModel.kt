@@ -1,35 +1,48 @@
 package br.com.crisun.cleanarchitecture.ui.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.crisun.architecture.domain.service.MessageService
 import br.com.crisun.architecture.domain.model.Message
-import br.com.crisun.architecture.domain.model.MessagesByHour
+import br.com.crisun.architecture.domain.model.MessagesReport
 import br.com.crisun.architecture.domain.model.onFailure
 import br.com.crisun.architecture.domain.model.onSuccess
+import br.com.crisun.architecture.domain.usecase.MessageReportUseCase
+import br.com.crisun.architecture.domain.usecase.RequestMessageUseCase
+import br.com.crisun.architecture.domain.usecase.SaveMessageUseCase
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.AnkoLogger
 
-class MainViewModel(private val service: MessageService) : ViewModel(), AnkoLogger {
-    val errorLiveData = MutableLiveData<String>()
-    val messageLiveData = MutableLiveData<Message>()
-    val messagesByHourLiveData = MutableLiveData<List<MessagesByHour>>()
+class MainViewModel(private val messageReportUseCase: MessageReportUseCase, private val requestMessageUseCase: RequestMessageUseCase, private val saveMessageUseCase: SaveMessageUseCase) : ViewModel() {
+    private val error = MutableLiveData<String>()
+    private val message = MutableLiveData<Message>()
+    private val messagesByHour = MutableLiveData<List<MessagesReport>>()
 
-    fun process() {
+    fun getError(): LiveData<String> = error
+
+    fun getMessage(): LiveData<Message> = message
+
+    fun getMessagesByHour(): LiveData<List<MessagesReport>> = messagesByHour
+
+    fun requestMessage() {
         viewModelScope.launch {
-
-            service.getMessage().onSuccess {
-                errorLiveData.value = ""
-                messageLiveData.value = it
-
-                service.insert(it)
+            requestMessageUseCase().onSuccess {
+                message.postValue(it)
             }.onFailure {
-                messageLiveData.value = null
-                errorLiveData.value = it.toString()
+                error.postValue(it.toString())
             }
+        }
+    }
 
-            messagesByHourLiveData.value = service.getMessagesByHour()
+    fun saveMessage(message: Message) {
+        viewModelScope.launch {
+            saveMessageUseCase(message)
+        }
+    }
+
+    fun messageReport() {
+        viewModelScope.launch {
+            messagesByHour.postValue(messageReportUseCase())
         }
     }
 }

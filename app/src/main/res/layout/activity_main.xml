@@ -5,14 +5,38 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.main.MainActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/reload_button"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_gravity="bottom|right"
-        app:srcCompat="@drawable/ic_sync" />
+        android:layout_gravity="bottom|end|right"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_save" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/load_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_list" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/reload_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_sync" />
+    </LinearLayout>
 
 </FrameLayout>

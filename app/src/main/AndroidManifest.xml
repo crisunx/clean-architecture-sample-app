@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:hardwareAccelerated="true"
             android:label="title_splash"
             android:screenOrientation="portrait"
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ui.main.MainActivity"></activity>
     </application>
 
 </manifest>

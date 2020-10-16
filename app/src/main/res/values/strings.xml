@@ -1,4 +1,6 @@
 <resources>
-    <string name="app_name">Clean Architecture</string>
     <string name="lbl_logo">Logo</string>
+    <string name="lbl_remote_call">Remote call:</string>
+    <string name="lbl_error">Error:</string>
+    <string name="lbl_history">History from DB:</string>
 </resources>

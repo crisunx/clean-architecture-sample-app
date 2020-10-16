@@ -1,7 +1,7 @@
 package br.com.crisun.cleanarchitecture
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import br.com.crisun.architecture.domain.service.MessageService
+import br.com.crisun.architecture.domain.usecase.MessageReportUseCase
 import br.com.crisun.cleanarchitecture.ui.main.MainViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -20,7 +20,7 @@ import org.junit.Test
 class MessageViewModelTest {
     val dispatcher = TestCoroutineDispatcher()
 
-    lateinit var service: MessageService
+    lateinit var useCase: MessageReportUseCase
     lateinit var viewModel: MainViewModel
 
     @get:Rule
@@ -30,8 +30,8 @@ class MessageViewModelTest {
     fun setup() {
         Dispatchers.setMain(dispatcher)
 
-        service = mockkClass(MessageService::class)
-        viewModel = MainViewModel(service)
+        useCase = mockkClass(MessageReportUseCase::class)
+        viewModel = MainViewModel(useCase)
     }
 
     @After
@@ -40,14 +40,14 @@ class MessageViewModelTest {
     }
 
     @Test
-    fun addition_isCorrect() {
+    fun `addition isCorrect`() {
         dispatcher.runBlockingTest {
-            coEvery { service.getMessage() } returns mockk()
-            coEvery { service.getMessagesByHour() } returns mockk()
+            coEvery { useCase.getMessage() } returns mockk()
+            coEvery { useCase.getMessagesByHour() } returns mockk()
 
             viewModel.process()
 
-            assertEquals(null, viewModel.messageLiveData.value)
+            assertEquals(null, viewModel.message.value)
         }
     }
 }

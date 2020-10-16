@@ -1,3 +1,5 @@
 package br.com.crisun.architecture.domain.model
 
-data class Message(val id: Long, val text: String)
+import java.util.*
+
+data class Message(val id: Long = 0, val text: String, val date: Date)
